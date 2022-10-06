@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consumindo API</title>
+    <style>
+        #resultado {
+            padding: 10px;
+            margin-top: 10px;
+            max-width: 350px;
+            background-color: lightgray;
+            border: 1px solid gray;
+            border-radius: 10px;
+            box-shadow: 2px 2px grey;
+        }
+    </style>
+    <script>
+        function mostrarProdutos(dados){
+           var mensagem ='';
+           dados.forEach(function (obj) {
+            mensagem += `
+                            <br>
+                            Produtos: ${obj.title} 
+                            <br>
+                            `
+           });
+           return mensagem;
+        }
+
+            async function consultaProduto(categoria){
+            fetch(`https://dummyjson.com/products/category/${categoria}`)
+            .then((response) => response.json())
+            .then((json) => {
+                console.log(json);
+                console.log(json.products)
+                resultado.innerHTML = mostrarProdutos(json.products)
+            });
+         }
+        
+
+    </script>
+</head>
+<body>
+    <h1>Consultas</h1>
+    <p>Informe o que você deseja consultar: </p>
+    <input type="text" id="category">
+    <button onclick="consultaProduto(category.value)">Consultar</button>
+    <div id="resultado">
+        <p>Resultado:</p>
+        <p id="respjson"></p>
+    </div>
+</body>
+</html>
